@@ -1,0 +1,18 @@
+{
+  "name": "Slides-for-Developers",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/quy267/Slides-for-Developers.git",
+  "author": "quynt <quynt6803@seta-international.vn>",
+  "license": "MIT",
+  "scripts": {
+    "slidev": "slidev"
+  },
+  "dependencies": {
+    "@slidev/cli": "^0.22.6",
+    "@slidev/theme-default": "^0.19.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}

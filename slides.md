@@ -4,9 +4,23 @@ background: https://source.unsplash.com/collection/94734566/1920x1080
 class: 'text-center'
 ---
 
-# Docker Jenkins CI/CD Pipeline
+# Scaling Up to 1 Million CCU
 
 ## Introduction
+
+---
+
+# What is CCU ?
+
+<style>
+h1 {
+  text-align: center;
+}
+</style>
+
+- CCU = Concurrent User
+- Total connected users at the same
+- CCU is not Request Per Seconds
 
 ---
 
@@ -18,14 +32,14 @@ h1 {
 }
 </style>
 
-- Why Docker
-- Jenkins Pipeline
+- A simple high load system
+- Require to reaching a million users
+- Monitoring & Logging
 - Scenarios Implementation
-- Demo
 
 ---
 
-# Why Docker ?
+# A simple high load system ?
 
 <style>
 h1 {
@@ -33,15 +47,11 @@ h1 {
 }
 </style>
 
-- Isolation
-- Lightweight
-- Simplicity
-- Workflow
-- Community
+<img src="/simple_high_load_system.png" class="rounded" style="height:50vh;margin-left:20vh"/>
 
 ---
 
-# Docker Engine
+# Require to reaching a million users
 
 <style>
 h1 {
@@ -49,12 +59,15 @@ h1 {
 }
 </style>
 
-- Docker Daemon
-- Docker CLI
+- Multi-AZ
+- Elastic Load Balancing between tiers
+- Auto Scaling
+- Service oriented architecture (SOA)
+- Serving content smartly (Amazon S3/CloudFront)
+- Caching off DB
+- Moving state off tiers that auto-scale
 
 ---
-
-# Docker Daemon
 
 <style>
 h1 {
@@ -62,13 +75,11 @@ h1 {
 }
 </style>
 
-- Builds Images
-- Runs and Manages Containers
-- RESTFUL API
+<img src="/Million_user.png" class="rounded" style="height:50vh"/>
 
 ---
 
-# Docker CLI
+# SOA (Service oriented architecture)
 
 <style>
 h1 {
@@ -76,17 +87,16 @@ h1 {
 }
 </style>
 
-- docker build # Build an image from a Dockerfile
-- docker images # List all images on a Docker host
-- docker run # Run an image
-- docker ps # List all running and stopped instances
-- docker stop # Stop a running instances
-- docker rm # Remove an instance
-- docker rmi # Remove an image
+- Move services into their own tiers
+    - Treat them separately
+    - Scale them independently
+- It offers flexibility and greater understanding of each component
+
+<img src="/SOA.png" class="rounded" style="height:30vh"/>
 
 ---
 
-# Docker Architecture
+# Database issues?
 
 <style>
 h1 {
@@ -94,11 +104,15 @@ h1 {
 }
 </style>
 
-<img src="/Docker_Architecture.png" class="rounded" style="height:60vh"/>
+### How can you solve?
+
+- Federation – splitting into multiple DBs based on function
+- Sharding – splitting one dataset up across multiple hosts
+- Moving some functionality to other types of DBs (NoSQL, Graph)
 
 ---
 
-# Docker Hub
+# Database federation
 
 <style>
 h1 {
@@ -106,15 +120,16 @@ h1 {
 }
 </style>
 
-- Provides Docker Services
-- Library of public images
-- Storage for your images
-- Free for public images
-- Cost for private images
+- Split up databases by function/purpose
+- Harder to do cross-function queries
+- Essentially delays sharding/NoSQL
+- Won’t help with single huge functions/tables
+
+<img src="/federation.png" class="rounded" style="height:65vh;margin-left:50vh;padding-bottom: 20vh"/>
 
 ---
 
-# Jenkins Pipeline
+# Monitoring & Logging
 
 <style>
 h1 {
@@ -122,83 +137,9 @@ h1 {
 }
 </style>
 
-- Pipeline as Code
-    * Capture the entire continuous delivery process
-    * Check a Jenkinsfile into your source repo
-- jenkins.io/doc/book/pipeline
+### Hard to failure recover on distributed system
 
----
+- Logging system: Elastic Search, Grafana
+- Monitoring system: Grafana, Prometheus, AWS cloudwatch
+- Distributed Tracing: Jeager, AWS X-RAY
 
-# Scenarios Implementation
-
-<style>
-h1 {
-  text-align: center;
-}
-</style>
-
-<img src="/1_MyncGrSowUxZCwehBVKHtg.jpeg" class="rounded" style="height:60vh"/>
-
----
-
-# Planning the pipeline
-
-<style>
-h1 {
-  text-align: center;
-}
-</style>
-
-- Stages desired:
-    - Build
-    - Test
-        - Unit
-        - Performance
-        - Front-end
-    - Static Analysis
-    - Deployment
-
----
-
-# Build
-
-<style>
-h1 {
-  text-align: center;
-}
-</style>
-
-- Goal:
-    - Perform a reproducible build – Create an artifact which can used later
-        - To run tests against
-        - To deploy to an environment
-    - In this case, we're using Docker.
-
----
-
-# Deployment
-
-<style>
-h1 {
-  text-align: center;
-}
-</style>
-
-- "Deployment" may have different meanings
-    - Deploying to AWS/Azure 
-    - Deploying to a physical datacenter 
-    - Uploading to an app store 
-    - Uploading to an internal artifact server
-
----
-
-# Demo 
-
-
-<style>
-h1 {
-  text-align: center;
-}
-</style>
-
-<img src="/aws_ecs.png" class="rounded" style="height:60vh"/>
